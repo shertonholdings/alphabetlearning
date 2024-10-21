@@ -46,7 +46,7 @@
             font-weight: bold;
         }
         .more-lessons-btn {
-            margin-top: 40px;
+            margin-top: 60px; /* Adjusted margin to move button 1 line lower */
             padding: 10px 20px;
             background-color: #28a745;
             color: white;
@@ -170,10 +170,10 @@
     // Function to check if the selected option is correct
     function checkAnswer(option, correctAnswer) {
         if (option.innerText === correctAnswer) {
-            feedbackMessage.innerText = "Great job!";
+            feedbackMessage.innerText = "Congratulations! Great job!";
             feedbackMessage.style.color = "green";
         } else {
-            feedbackMessage.innerText = "Try again!";
+            feedbackMessage.innerText = "Oh Sorry, Try again!";
             feedbackMessage.style.color = "red";
         }
         // After feedback, show a new letter
