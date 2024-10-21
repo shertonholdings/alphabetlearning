@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Learning - Grade 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .question {
+            margin-top: 20px;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .option {
+            padding: 10px 20px;
+            font-size: 24px;
+            background-color: lightgray;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Alphabet Learning - Match the Letters</h1>
+<p>Click the matching letter!</p>
+
+<div class="question">
+    <p id="displayLetter">A</p>
+</div>
+
+<div class="options">
+    <div class="option" onclick="checkAnswer(this)">A</div>
+    <div class="option" onclick="checkAnswer(this)">a</div>
+    <div class="option" onclick="checkAnswer(this)">B</div>
+    <div class="option" onclick="checkAnswer(this)">b</div>
+</div>
+
+<div class="feedback" id="feedbackMessage"></div>
+
+<!-- Audio for letter sounds -->
+<audio id="letterSound" src="sounds/a-sound.mp3"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
