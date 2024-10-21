@@ -8,9 +8,18 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #333;
+        }
+        .logo {
+            margin-top: 20px;
         }
         .question {
             margin-top: 20px;
+            font-size: 48px;
+            font-weight: bold;
         }
         .options {
             display: flex;
@@ -21,38 +30,162 @@
         .option {
             padding: 10px 20px;
             font-size: 24px;
-            background-color: lightgray;
+            background-color: #1E90FF;
+            color: white;
             cursor: pointer;
-            border: 1px solid #ccc;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .option:hover {
+            background-color: #4682B4;
         }
         .feedback {
             margin-top: 20px;
             font-size: 20px;
             font-weight: bold;
         }
+        .more-lessons-btn {
+            margin-top: 40px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .more-lessons-btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
 
+<!-- Logo at the top -->
+<div class="logo">
+    <img src="https://i.imgur.com/mwpTHJj.png" alt="Alphabet Learning Logo" width="150px">
+</div>
+
 <h1>Alphabet Learning - Match the Letters</h1>
 <p>Click the matching letter!</p>
 
+<!-- Letter display -->
 <div class="question">
     <p id="displayLetter">A</p>
 </div>
 
-<div class="options">
-    <div class="option" onclick="checkAnswer(this)">A</div>
-    <div class="option" onclick="checkAnswer(this)">a</div>
-    <div class="option" onclick="checkAnswer(this)">B</div>
-    <div class="option" onclick="checkAnswer(this)">b</div>
+<!-- Letter options -->
+<div class="options" id="optionsContainer">
+    <!-- Options will be generated here -->
 </div>
 
+<!-- Feedback message -->
 <div class="feedback" id="feedbackMessage"></div>
 
-<!-- Audio for letter sounds -->
-<audio id="letterSound" src="sounds/a-sound.mp3"></audio>
+<!-- "More Lessons" button -->
+<a href="https://sites.google.com/view/grades-1/home" class="more-lessons-btn">More Lessons</a>
 
-<script src="script.js"></script>
+<!-- Audio for letter sounds -->
+<audio id="letterSound"></audio>
+
+<!-- JavaScript -->
+<script>
+    const displayLetter = document.getElementById('displayLetter');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const letterSound = document.getElementById('letterSound');
+    const optionsContainer = document.getElementById('optionsContainer');
+
+    // List of letters from A to Z with sounds
+    const letters = [
+        { letter: 'A', match: 'a', sound: 'sounds/a-sound.mp3' },
+        { letter: 'B', match: 'b', sound: 'sounds/b-sound.mp3' },
+        { letter: 'C', match: 'c', sound: 'sounds/c-sound.mp3' },
+        { letter: 'D', match: 'd', sound: 'sounds/d-sound.mp3' },
+        { letter: 'E', match: 'e', sound: 'sounds/e-sound.mp3' },
+        { letter: 'F', match: 'f', sound: 'sounds/f-sound.mp3' },
+        { letter: 'G', match: 'g', sound: 'sounds/g-sound.mp3' },
+        { letter: 'H', match: 'h', sound: 'sounds/h-sound.mp3' },
+        { letter: 'I', match: 'i', sound: 'sounds/i-sound.mp3' },
+        { letter: 'J', match: 'j', sound: 'sounds/j-sound.mp3' },
+        { letter: 'K', match: 'k', sound: 'sounds/k-sound.mp3' },
+        { letter: 'L', match: 'l', sound: 'sounds/l-sound.mp3' },
+        { letter: 'M', match: 'm', sound: 'sounds/m-sound.mp3' },
+        { letter: 'N', match: 'n', sound: 'sounds/n-sound.mp3' },
+        { letter: 'O', match: 'o', sound: 'sounds/o-sound.mp3' },
+        { letter: 'P', match: 'p', sound: 'sounds/p-sound.mp3' },
+        { letter: 'Q', match: 'q', sound: 'sounds/q-sound.mp3' },
+        { letter: 'R', match: 'r', sound: 'sounds/r-sound.mp3' },
+        { letter: 'S', match: 's', sound: 'sounds/s-sound.mp3' },
+        { letter: 'T', match: 't', sound: 'sounds/t-sound.mp3' },
+        { letter: 'U', match: 'u', sound: 'sounds/u-sound.mp3' },
+        { letter: 'V', match: 'v', sound: 'sounds/v-sound.mp3' },
+        { letter: 'W', match: 'w', sound: 'sounds/w-sound.mp3' },
+        { letter: 'X', match: 'x', sound: 'sounds/x-sound.mp3' },
+        { letter: 'Y', match: 'y', sound: 'sounds/y-sound.mp3' },
+        { letter: 'Z', match: 'z', sound: 'sounds/z-sound.mp3' }
+    ];
+
+    // Function to generate new options and randomize the letter shown
+    function getRandomLetter() {
+        const randomIndex = Math.floor(Math.random() * letters.length);
+        const randomLetter = letters[randomIndex];
+        
+        // Display random letter
+        displayLetter.innerText = randomLetter.letter;
+        
+        // Play the sound of the letter
+        letterSound.src = randomLetter.sound;
+        letterSound.play();
+        
+        // Clear previous options
+        optionsContainer.innerHTML = '';
+        
+        // Generate random options, including the correct match
+        const options = [randomLetter.match];
+        
+        // Add a few other random incorrect options
+        while (options.length < 4) {
+            const randomOption = letters[Math.floor(Math.random() * letters.length)].match;
+            if (!options.includes(randomOption)) {
+                options.push(randomOption);
+            }
+        }
+        
+        // Shuffle options and display them
+        options.sort(() => Math.random() - 0.5);
+        
+        options.forEach(option => {
+            const optionElement = document.createElement('button');
+            optionElement.classList.add('option');
+            optionElement.innerText = option;
+            optionElement.onclick = () => checkAnswer(optionElement, randomLetter.match);
+            optionsContainer.appendChild(optionElement);
+        });
+        
+        // Return the correct match for this round
+        return randomLetter.match;
+    }
+
+    // Function to check if the selected option is correct
+    function checkAnswer(option, correctAnswer) {
+        if (option.innerText === correctAnswer) {
+            feedbackMessage.innerText = "Great job!";
+            feedbackMessage.style.color = "green";
+        } else {
+            feedbackMessage.innerText = "Try again!";
+            feedbackMessage.style.color = "red";
+        }
+        // After feedback, show a new letter
+        setTimeout(() => {
+            feedbackMessage.innerText = ""; // Clear feedback
+            getRandomLetter(); // Generate a new letter
+        }, 1500); // 1.5-second delay before next question
+    }
+
+    // Start the first round
+    getRandomLetter();
+</script>
+
 </body>
 </html>
